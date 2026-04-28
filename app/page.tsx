@@ -1,65 +1,295 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence, Variants } from "framer-motion";
+import LanguageModal from "./components/language";
+import Portfolio from "./portfolio"; // ← importe o componente que criamos
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+type Lang = "pt" | "en";
+type Page = "home" | "portfolio";
+
+// ─── Translations ─────────────────────────────────────────────────────────────
+const translations = {
+  pt: {
+    eyebrow: "Desenvolvedor & Criador",
+    greeting: "Olá, eu sou",
+    description: "Desenvolvedor fullstack focado em experiências interativas",
+    cta: "Ver portfólio",
+    ghost: "Entre em contato",
+    based: "Baseado em",
+    location: "Recife, Brasil",
+  },
+  en: {
+    eyebrow: "Developer & Creator",
+    greeting: "Hi, I am",
+    description: "Fullstack developer focused on interactive experiences",
+    cta: "View portfolio",
+    ghost: "Get in touch",
+    based: "Based in",
+    location: "Recife, Brazil",
+  },
+};
+
+// ─── Arrow Icon ───────────────────────────────────────────────────────────────
+function ArrowRight() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      className="transition-transform duration-200 group-hover:translate-x-1"
+    >
+      <path
+        d="M2 7h10M8 3l4 4-4 4"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+// ─── Custom Cursor ────────────────────────────────────────────────────────────
+function CustomCursor() {
+  const [pos, setPos] = useState({ x: -100, y: -100 });
+  const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    const move = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY });
+    const over = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest("button, a, .hoverable"))
+        setHovered(true);
+    };
+    const out = () => setHovered(false);
+
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseover", over);
+    window.addEventListener("mouseout", out);
+    return () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseover", over);
+      window.removeEventListener("mouseout", out);
+    };
+  }, []);
+
+  return (
+    <>
+      <div
+        className="fixed z-[9999] w-[6px] h-[6px] bg-white rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 transition-transform duration-100"
+        style={{ left: pos.x, top: pos.y }}
+      />
+      <div
+        className="fixed z-[9998] rounded-full border pointer-events-none -translate-x-1/2 -translate-y-1/2 transition-all duration-[250ms]"
+        style={{
+          left: pos.x,
+          top: pos.y,
+          width: hovered ? 48 : 32,
+          height: hovered ? 48 : 32,
+          borderColor: hovered
+            ? "rgba(255,255,255,0.6)"
+            : "rgba(255,255,255,0.3)",
+        }}
+      />
+    </>
+  );
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+export default function Home() {
+  const [lang, setLang] = useState<Lang | null>(null);
+  const [page, setPage] = useState<Page>("home");
+  const t = lang ? translations[lang] : translations.en;
+
+  const container: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.18, delayChildren: 0.35 },
+    },
+  };
+
+  const fadeUp: Variants = {
+    hidden: { opacity: 0, y: 22, filter: "blur(8px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
+    },
+  };
+
+  // ── Renderiza portfólio se page === "portfolio" ─────────────────────────────
+  if (page === "portfolio") {
+    return (
+      <Portfolio
+        lang={lang ?? "en"}
+        onBack={() => setPage("home")}
+      />
+    );
+  }
+
+  // ── Home ───────────────────────────────────────────────────────────────────
+  return (
+    <>
+      <div className="hidden md:block">
+        <CustomCursor />
+      </div>
+
+      <AnimatePresence mode="wait">
+        {!lang && <LanguageModal onSelect={setLang} />}
+      </AnimatePresence>
+
+      <main className="h-screen w-full bg-[#080808] text-white overflow-hidden relative cursor-none flex flex-col md:flex-row">
+
+        {/* Noise texture */}
+        <div
+          className="absolute inset-0 z-0 pointer-events-none opacity-[0.035]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+            backgroundSize: "150px 150px",
+          }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {/* Ambient blobs */}
+        <div
+          className="absolute -top-[20%] -left-[10%] w-[70vw] h-[70vw] rounded-full pointer-events-none z-0 animate-blob-1"
+          style={{ background: "radial-gradient(ellipse, rgba(120,60,220,0.12) 0%, transparent 70%)" }}
+        />
+        <div
+          className="absolute -bottom-[20%] -right-[10%] w-[55vw] h-[55vw] rounded-full pointer-events-none z-0 animate-blob-2"
+          style={{ background: "radial-gradient(ellipse, rgba(255,255,255,0.04) 0%, transparent 70%)" }}
+        />
+
+        {/* LEFT — Text section */}
+        <motion.div
+          key={lang ?? "default"}
+          variants={container}
+          initial="hidden"
+          animate={lang ? "visible" : "hidden"}
+          className="flex-[1.62] flex flex-col justify-center px-10 md:px-24 z-10 relative"
+        >
+          <motion.p
+            variants={fadeUp}
+            className="text-[11px] tracking-[0.25em] uppercase text-white/35 font-light mb-7"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            {t.eyebrow}
+          </motion.p>
+
+          <motion.h1
+            variants={fadeUp}
+            className="font-syne font-extrabold leading-[0.93] tracking-[-0.03em] text-[clamp(52px,6.5vw,92px)] mb-7"
           >
-            Documentation
-          </a>
-        </div>
+            <span className="text-white/30 font-normal">{t.greeting}</span>
+            <br />
+            <span
+              style={{
+                background: "linear-gradient(105deg, #fff 30%, rgba(255,255,255,0.42) 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Ezequiel
+              <br />
+              Borges.
+            </span>
+          </motion.h1>
+
+          <motion.p
+            variants={fadeUp}
+            className="text-white/40 font-light text-[clamp(14px,1.3vw,17px)] leading-relaxed max-w-[360px] mb-12"
+          >
+            {t.description}
+          </motion.p>
+
+          <motion.div variants={fadeUp} className="flex items-center gap-5">
+            {/* ← botão agora chama setPage("portfolio") */}
+            <button
+              onClick={() => setPage("portfolio")}
+              className="bg-white text-[#080808] font-syne font-bold text-[13px] tracking-[0.08em] uppercase px-9 py-[15px] hover:bg-white/88 transition-all duration-200 hover:-translate-y-[2px]"
+            >
+              {t.cta}
+            </button>
+            <button className="group flex items-center gap-2 text-white/45 font-light text-[13px] hover:text-white/90 transition-colors duration-200 border-none bg-transparent">
+              {t.ghost}
+              <ArrowRight />
+            </button>
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            className="absolute bottom-8 left-10 md:left-24 flex gap-6"
+          >
+            {["GitHub", "LinkedIn", "Gmail"].map((s) => (
+              <span
+                key={s}
+                className="hoverable text-[10px] tracking-[0.2em] uppercase text-white/20 font-light cursor-pointer hover:text-white/55 transition-colors duration-200"
+              >
+                {s}
+              </span>
+            ))}
+          </motion.div>
+        </motion.div>
+
+        {/* RIGHT — Photo section */}
+        <motion.div
+          initial={{ opacity: 0, x: 48 }}
+          animate={lang ? { opacity: 1, x: 0 } : { opacity: 0, x: 48 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
+          className="relative w-full md:w-[38vw] h-1/2 md:h-full overflow-hidden"
+        >
+          <div className="absolute left-0 top-0 bottom-0 w-px z-30 bg-gradient-to-b from-transparent via-white/25 to-transparent" />
+
+          <Image
+            src="/images/ezequiel.jpg"
+            alt="Ezequiel Borges"
+            fill
+            priority
+            className="object-cover object-top grayscale contrast-105 scale-[1.03] hover:scale-[1.06] transition-transform duration-[8000ms] ease-in-out"
+          />
+
+          <div
+            className="absolute inset-0 z-10 pointer-events-none"
+            style={{ background: "linear-gradient(to right, #080808 0%, rgba(8,8,8,0.55) 22%, transparent 55%)" }}
+          />
+          <div
+            className="absolute inset-0 z-10 pointer-events-none"
+            style={{ background: "linear-gradient(to top, #080808 0%, transparent 28%)" }}
+          />
+
+          {/* Floating badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={lang ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
+            className="absolute bottom-9 right-9 z-30 flex flex-col gap-1 px-5 py-3"
+            style={{
+              background: "rgba(255,255,255,0.03)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              backdropFilter: "blur(12px)",
+              borderRadius: "12px",
+            }}
+          >
+            <span className="text-[9px] tracking-[0.25em] uppercase text-white/30 font-light">
+              {t.based}
+            </span>
+            <div className="flex items-center gap-2">
+              <span className="font-syne font-bold text-[13px] tracking-tight text-white/90">
+                {t.location}
+              </span>
+              <img
+                src="https://flagcdn.com/w40/br.png"
+                alt="Brasil"
+                className="w-4 h-3 object-cover rounded-[1px]"
+              />
+            </div>
+          </motion.div>
+        </motion.div>
       </main>
-    </div>
+    </>
   );
 }
