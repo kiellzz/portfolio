@@ -1,29 +1,44 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-// ─── SVG ICONS ─────────────────────────────────────────────
-
-function GithubIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-      <path d="M12 .5C5.73.5.75 5.7.75 12.2c0 5.2 3.44 9.6 8.2 11.2.6.1.8-.3.8-.6v-2.2c-3.34.7-4.04-1.6-4.04-1.6-.5-1.3-1.24-1.6-1.24-1.6-1.02-.7.08-.7.08-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1 1.7.6 2.1 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.4-5.5-6 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.3a11 11 0 0 1 6 0C17.2 4.2 18.2 4.5 18.2 4.5c.6 1.6.2 2.8.1 3.1.8.9 1.2 2 1.2 3.3 0 4.6-2.8 5.7-5.5 6 .5.4.8 1.1.8 2.3v3.4c0 .3.2.7.8.6 4.8-1.6 8.2-6 8.2-11.2C23.25 5.7 18.27.5 12 .5z" />
-    </svg>
-  );
+// ─── Inject Devicon stylesheet once ────────────────────────
+function useDevicon() {
+  useEffect(() => {
+    const id = "devicon-css";
+    if (document.getElementById(id)) return;
+    const link = document.createElement("link");
+    link.id = id;
+    link.rel = "stylesheet";
+    link.type = "text/css";
+    link.href = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css";
+    document.head.appendChild(link);
+  }, []);
 }
 
-function LinkedinIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-      <path d="M4.98 3.5C4.98 4.9 3.87 6 2.48 6S0 4.9 0 3.5 1.11 1 2.48 1s2.5 1.1 2.5 2.5zM0 8h4.9v15H0V8zm7.5 0H12v2.1h.1c.6-1.1 2.1-2.3 4.4-2.3 4.7 0 5.6 3.1 5.6 7.1V23h-4.9v-6.8c0-1.6 0-3.7-2.3-3.7s-2.6 1.7-2.6 3.6V23H7.5V8z" />
-    </svg>
-  );
-}
-
+// ─── Mail Icon ──────────────────────────────────────────────
 function MailIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
+      <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5L4 8V6l8 5 8-5v2z" />
+    </svg>
+  );
+}
+
+// ─── Toast Mail Icon ────────────────────────────────────────
+function ToastMailIcon() {
+  return (
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="rgba(255,255,255,0.85)"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5L4 8V6l8 5 8-5v2z" />
     </svg>
   );
@@ -44,15 +59,16 @@ const footerT = {
 };
 
 // ─── COMPONENT ─────────────────────────────────────────────
-
 export default function PortfolioFooter({ lang = "pt" }: { lang?: Lang }) {
+  useDevicon();
+
   const [toast, setToast] = useState(false);
   const t = footerT[lang];
 
   const copyEmail = async () => {
     await navigator.clipboard.writeText("ezequielborgesdev@gmail.com");
     setToast(true);
-    setTimeout(() => setToast(false), 1800);
+    setTimeout(() => setToast(false), 2200);
   };
 
   return (
@@ -61,29 +77,80 @@ export default function PortfolioFooter({ lang = "pt" }: { lang?: Lang }) {
       <AnimatePresence>
         {toast && (
           <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.96 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: -28, scale: 0.88, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0,   scale: 1,    filter: "blur(0px)" }}
+            exit={{   opacity: 0, y: -16,  scale: 0.94, filter: "blur(4px)" }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
             className="fixed top-6 left-1/2 -translate-x-1/2 z-[999]"
           >
             <div
-              className="px-5 py-3 text-[11px] tracking-[0.25em] uppercase text-white/90 font-light relative overflow-hidden"
+              className="flex flex-col items-center gap-[5px] px-8 py-[18px] relative overflow-hidden"
               style={{
-                background: "rgba(25, 10, 40, 0.85)",
-                border: "1px solid rgba(168, 85, 247, 0.35)",
-                backdropFilter: "blur(14px)",
-                boxShadow: "0 0 25px rgba(168, 85, 247, 0.35), 0 10px 40px rgba(0,0,0,0.4)",
+                background: "rgba(12, 12, 12, 0.95)",
+                border: "1px solid rgba(255,255,255,0.18)",
+                borderRadius: "14px",
+                boxShadow: "0 0 0 1px rgba(255,255,255,0.04), 0 24px 48px rgba(0,0,0,0.6)",
+                backdropFilter: "blur(16px)",
               }}
             >
-              <div
-                className="absolute inset-0 pointer-events-none"
+              {/* top shimmer line */}
+              <span
+                className="absolute top-0 left-[20%] right-[20%] h-px pointer-events-none"
                 style={{
-                  background: "radial-gradient(circle at center, rgba(168,85,247,0.25), transparent 70%)",
-                  opacity: 0.8,
+                  background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)",
                 }}
               />
-              <span className="relative z-10">{t.copied}</span>
+
+              {/* shimmer sweep */}
+              <motion.span
+                initial={{ x: "-100%", opacity: 0 }}
+                animate={{ x: "220%",  opacity: [0, 1, 0] }}
+                transition={{ duration: 0.9, delay: 0.3, ease: "easeInOut" }}
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  width: "40%",
+                  background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent)",
+                }}
+              />
+
+              {/* icon circle */}
+              <motion.div
+                initial={{ scale: 0.4, opacity: 0 }}
+                animate={{ scale: 1,   opacity: 1 }}
+                transition={{ duration: 0.45, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="flex items-center justify-center mb-[6px]"
+                style={{
+                  width: 34,
+                  height: 34,
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.07)",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                }}
+              >
+                <ToastMailIcon />
+              </motion.div>
+
+              {/* label */}
+              <motion.span
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
+                className="text-[10px] tracking-[0.24em] uppercase font-light"
+                style={{ color: "rgba(255,255,255,0.9)" }}
+              >
+                {t.copied}
+              </motion.span>
+
+              {/* email */}
+              <motion.span
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.32, ease: "easeOut" }}
+                className="text-[11px] font-light tracking-[0.04em]"
+                style={{ color: "rgba(255,255,255,0.35)" }}
+              >
+                ezequielborgesdev@gmail.com
+              </motion.span>
             </div>
           </motion.div>
         )}
@@ -106,27 +173,32 @@ export default function PortfolioFooter({ lang = "pt" }: { lang?: Lang }) {
           © 2026 Ezequiel Borges
         </span>
 
-        {/* Center - ICONS ONLY */}
+        {/* Center - Icons */}
         <div className="flex items-center gap-7 text-white/40">
           <a
             href="https://github.com/kiellzz"
             target="_blank"
-            className="hover:text-white transition-transform duration-200 hover:scale-110"
+            rel="noopener noreferrer"
+            className="hover:text-white transition-all duration-200 hover:scale-110 inline-flex"
+            aria-label="GitHub"
           >
-            <GithubIcon />
+            <i className="devicon-github-original text-[26px]" />
           </a>
 
           <a
             href="https://linkedin.com/in/ezequielborgesdev"
             target="_blank"
-            className="hover:text-white transition-transform duration-200 hover:scale-110"
+            rel="noopener noreferrer"
+            className="hover:text-white transition-all duration-200 hover:scale-110 inline-flex"
+            aria-label="LinkedIn"
           >
-            <LinkedinIcon />
+            <i className="devicon-linkedin-plain text-[26px]" />
           </a>
 
           <button
             onClick={copyEmail}
-            className="hover:text-white transition-transform duration-200 hover:scale-110 text-white/40"
+            className="hover:text-white transition-all duration-200 hover:scale-110 text-white/40 inline-flex"
+            aria-label="Copy email"
           >
             <MailIcon />
           </button>

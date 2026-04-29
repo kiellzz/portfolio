@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import PortfolioFooter from "./components/portfolioFooter";
 import SkillsBadges from "./components/skillsBadges";
-
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+import ProjectsSection from "./components/projects";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 type Lang = "pt" | "en";
@@ -20,7 +19,7 @@ const translations = {
       skills: "Skills",
       contact: "Contato",
     },
-    back: "← Voltar",
+    back: "Voltar",
     available: "Disponível para projetos",
     hero: {
       label: "Portfólio selecionado",
@@ -31,37 +30,40 @@ const translations = {
       {
         number: "01",
         name: "Ballers",
-        type: "Website · Match Engine",
-        year: "2026",
-        desc: "Simulador de futebol interativo que combina o gerenciamento de cartas estilo FIFA a um motor de jogo focado em decisões táticas e duelos de atributos.",
+        type: "Website · Frontend · Game",
+        desc: "Simulador de futebol interativo que combina o gerenciamento de cartas estilo FIFA a um motor de jogo focado em decisões e duelos de atributos.",
         tags: ["React", "TypeScript", "Vite"],
+        video: "/videos/ballers.mp4",
+        repo: "https://github.com/kiellzz/ballers-game",
       },
       {
         number: "02",
         name: "EZSaldo",
-        type: "Fullstack · App financeiro",
-        year: "2026",
+        type: "Webiste · Fullstack · App financeiro",
         desc: "Aplicação de gestão financeira fullstack com dashboard dinâmico, focada em uma experiência de usuário limpa e controle de saldo em tempo real.",
         tags: ["HTML", "CSS", "JavaScript", "Node.js"],
+        video: "/videos/ezsaldo.mp4",
+        repo: "https://github.com/kiellzz/financial-tracker",
       },
       {
         number: "03",
         name: "Slowed + Reverb Maker",
-        type: "Website · Áudio",
-        year: "2026",
+        type: "Website · Fullstack/Deploy · Áudio",
         desc: "Ferramenta web para criação de áudios slowed + reverb, que combina processamento de áudio via FFmpeg com uma interface moderna e sistema de pré-visualização antes do download",
-        tags: ["HTML", "CSS5", "JavaScript", "FFMPEG"],
+        tags: ["HTML", "CSS5", "JavaScript", "Node.js", "FFMPEG"],
+        video: "/videos/slowedreverb.mp4",
+        repo: "https://github.com/kiellzz/slowed-reverb-maker",
       },
     ],
     about: {
       label: "Sobre mim",
       title: "Código com\nintenção.",
-      p1: "Sou estudante de Análise e Desenvolvimento de Sistemas no 4º período pela Faculdade Senac, empenhado em criar projetos que combinam performance técnica de qualidade com design memorável.",
+      p1: "Sou estudante de Análise e Desenvolvimento de Sistemas no 4º período da Faculdade Senac, com foco em resolver problemas e desenvolver projetos que aliam alto desempenho técnico a experiências de design memoráveis.",
       p2: "Estou em busca de oportunidades de estágio e emprego, onde cada detalhe importa, desde a arquitetura do sistema até a interface do usuário.",
-      exp: "3+ anos",
-      expLabel: "de experiência",
-      projects: "40+",
-      projectsLabel: "projetos entregues",
+      exp: "2024 - 2026",
+      expLabel: "Atualmente cursando Análise e Desenvolvimento de Sistemas",
+      projects: "B2 English",
+      projectsLabel: "Intermediário avançado",
     },
     skills: {
       label: "Stack técnico",
@@ -70,17 +72,17 @@ const translations = {
         {
           name: "Frontend",
           color: "#818cf8",
-          items: ["React", "JavaScript", "TypeScript", "Framer Motion", "Tailwind CSS"],
+          items: ["React", "JavaScript", "TypeScript", "Next.js", "React Native", "Framer Motion", "Tailwind CSS"],
         },
         {
           name: "Backend",
           color: "#34d399",
-          items: ["Node.js", "Express.js", "MongoDB", "Multer", "FFMPEG"],
+          items: ["Node.js", "Express.js", "Python", "MongoDB", "MySQL", "Multer", "FFMPEG"],
         },
         {
           name: "Ferramentas",
           color: "#fb923c",
-          items: ["Git", "GitHub", "Render", "Figma", "Canva"],
+          items: ["Git", "GitHub", "Vercel", "Render", "Figma", "Canva"],
         },
       ],
     },
@@ -89,7 +91,7 @@ const translations = {
       title: "Próximo\nprojeto.",
       sub: "Aberto para freelance, trabalho remoto e colaborações criativas.",
       cta: "Enviar mensagem",
-      email: "ezequiel@dev.com",
+      email: "ezequielborgesdev@gmail.com",
     },
   },
   en: {
@@ -99,7 +101,7 @@ const translations = {
       skills: "Skills",
       contact: "Contact",
     },
-    back: "← Back",
+    back: "Back",
     available: "Available for projects",
     hero: {
       label: "Selected portfolio",
@@ -110,37 +112,40 @@ const translations = {
       {
         number: "01",
         name: "Ballers",
-        type: "Website · Match Engine",
-        year: "2026",
-        desc: "Interactive football simulator that combines FIFA-style card management with a gameplay engine focused on tactical decisions and attribute-based duels.",
+        type: "Website · Frontend · Game",
+        desc: "Interactive football simulator that combines FIFA-style card management with a gameplay engine focused on decisions and attribute-based duels.",
         tags: ["React", "TypeScript", "Vite"],
+        video: "/videos/ballers.mp4",
+        repo: "https://github.com/kiellzz/ballers-game",
       },
       {
         number: "02",
         name: "EZSaldo",
-        type: "Fullstack · Financial App",
-        year: "2026",
+        type: "Website · Fullstack · Financial App",
         desc: "Fullstack financial management application with a dynamic dashboard, focused on a clean user experience and real-time balance tracking.",
         tags: ["HTML", "CSS", "JavaScript", "Node.js"],
+        video: "/videos/ezsaldo.mp4",
+        repo: "https://github.com/kiellzz/financial-tracker",
       },
       {
         number: "03",
         name: "Slowed + Reverb Maker",
-        type: "Website · Audio",
-        year: "2026",
+        type: "Website · Fullstack/Deploy · Audio",
         desc: "Web tool for creating slowed + reverb audios, combining FFmpeg audio processing with a modern interface and preview system before download.",
         tags: ["HTML", "CSS", "JavaScript", "FFMPEG"],
+        video: "/videos/slowedreverb.mp4",
+        repo: "https://github.com/kiellzz/slowed-reverb-maker",
       },
     ],
     about: {
       label: "About me",
       title: "Code with\nintention.",
-      p1: "I'm a Systems Analysis and Development student in my 4th semester at Faculdade Senac, passionate about building interfaces that combine technical performance with memorable design.",
-      p2: "I'm currently looking for internship and job opportunities — where every detail matters, from system architecture to the final pixel on screen.",
-      exp: "3+ years",
-      expLabel: "of experience",
-      projects: "40+",
-      projectsLabel: "projects delivered",
+      p1: "I'm a Systems Analysis and Development program student in my 4th semester at Senac College (Brazil), passionate about problem-solving and building interfaces that combine technical performance with memorable design.",
+      p2: "I'm currently looking for internship and job opportunities, where every detail matters, from system architecture to the final UI on screen.",
+      exp: "2024 - 2026",
+      expLabel: "Currently pursuing Systems Analysis and Development",
+      projects: "B2 English",
+      projectsLabel: "Upper Intermediate",
     },
     skills: {
       label: "Tech stack",
@@ -149,17 +154,17 @@ const translations = {
         {
           name: "Frontend",
           color: "#818cf8",
-          items: ["React", "JavaScript", "TypeScript", "Framer Motion", "Tailwind CSS"],
+          items: ["React", "JavaScript", "TypeScript", "Next.js", "React Native", "Framer Motion", "Tailwind CSS"],
         },
         {
           name: "Backend",
           color: "#34d399",
-          items: ["Node.js", "Express.js", "MongoDB", "Multer", "FFMPEG"],
+          items: ["Node.js", "Express.js", "Python", "MongoDB", "MySQL", "Multer", "FFMPEG"],
         },
         {
           name: "Tools",
           color: "#fb923c",
-          items: ["Git", "GitHub", "Render", "Figma", "Canva"],
+          items: ["Git", "GitHub", "Vercel", "Render", "Figma", "Canva"],
         },
       ],
     },
@@ -168,29 +173,18 @@ const translations = {
       title: "Next\nproject.",
       sub: "Open for freelance, remote work and creative collaborations.",
       cta: "Send message",
-      email: "ezequiel@dev.com",
+      email: "ezequielborgesdev@gmail.com",
     },
   },
 };
 
-// ─── Arrow Icon ────────────────────────────────────────────────────────────────
-function ArrowRight({ className = "" }: { className?: string }) {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className={className}>
-      <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 // ─── Header ────────────────────────────────────────────────────────────────────
 function Header({
-  lang,
   active,
   onNav,
   onBack,
   t,
 }: {
-  lang: Lang;
   active: Section;
   onNav: (s: Section) => void;
   onBack: () => void;
@@ -211,13 +205,28 @@ function Header({
         borderBottom: "1px solid rgba(255,255,255,0.06)",
       }}
     >
+      {/* ── Back button — more prominent ── */}
       <button
         onClick={onBack}
-        className="flex items-center gap-2 text-white/35 hover:text-white/80 transition-colors duration-200 text-[11px] tracking-[0.2em] uppercase font-light"
+        className="group flex items-center gap-2 transition-colors duration-200"
       >
-        {t.back}
+        <span
+          className="flex items-center justify-center w-6 h-6 transition-all duration-200 group-hover:-translate-x-[2px]"
+          style={{
+            border: "1px solid rgba(255,255,255,0.2)",
+            color: "rgba(255,255,255,0.6)",
+          }}
+        >
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M7 1L3 5l4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+        <span className="text-[11px] tracking-[0.2em] uppercase font-light text-white/60 group-hover:text-white/90 transition-colors duration-200">
+          {t.back}
+        </span>
       </button>
 
+      {/* ── Nav ── */}
       <nav className="hidden md:flex items-center gap-8">
         {navItems.map((item) => (
           <button
@@ -238,17 +247,32 @@ function Header({
         ))}
       </nav>
 
-      <div className="hidden md:flex items-center gap-2">
-        <span className="w-[6px] h-[6px] rounded-full bg-emerald-400 animate-pulse" />
-        <span className="text-[10px] tracking-[0.2em] uppercase text-white/25 font-light">{t.available}</span>
+      {/* ── Available badge — more prominent ── */}
+      <div
+        className="hidden md:flex items-center gap-2 px-3 py-[6px]"
+        style={{
+          border: "1px solid rgba(52,211,153,0.3)",
+          background: "rgba(52,211,153,0.06)",
+        }}
+      >
+        <span className="w-[6px] h-[6px] rounded-full bg-emerald-400 animate-pulse shrink-0" />
+        <span className="text-[10px] tracking-[0.18em] uppercase text-emerald-400/80 font-light">
+          {t.available}
+        </span>
       </div>
 
+      {/* ── Mobile hamburger ── */}
       <button
         className="md:hidden text-white/40 hover:text-white/80 transition-colors"
         onClick={() => setMenuOpen(!menuOpen)}
       >
         <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
-          <path d={menuOpen ? "M1 1l16 10M1 11L17 1" : "M0 1h18M0 6h18M0 11h18"} stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+          <path
+            d={menuOpen ? "M1 1l16 10M1 11L17 1" : "M0 1h18M0 6h18M0 11h18"}
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+          />
         </svg>
       </button>
 
@@ -279,120 +303,7 @@ function Header({
   );
 }
 
-// ─── Project Card ──────────────────────────────────────────────────────────────
-function ProjectCard({ project, index }: { project: (typeof translations.en.projects)[0]; index: number }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="group relative border-b cursor-pointer"
-      style={{ borderColor: "rgba(255,255,255,0.07)" }}
-    >
-      <div
-        className="absolute inset-0 transition-opacity duration-300 pointer-events-none"
-        style={{
-          background: "linear-gradient(90deg, rgba(255,255,255,0.02) 0%, transparent 100%)",
-          opacity: hovered ? 1 : 0,
-        }}
-      />
-      <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-0 px-0 py-8 md:py-10">
-        <span className="text-[11px] tracking-[0.2em] text-white/20 font-light w-12 shrink-0">
-          {project.number}
-        </span>
-
-        <div className="flex-1 md:pr-8">
-          <h3
-            className="font-syne font-extrabold text-[clamp(22px,2.8vw,38px)] tracking-[-0.02em] leading-none transition-colors duration-200"
-            style={{ color: hovered ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.85)" }}
-          >
-            {project.name}
-          </h3>
-          <p className="text-[11px] tracking-[0.18em] uppercase text-white/25 font-light mt-1">
-            {project.type}
-          </p>
-        </div>
-
-        <div
-          className="md:w-[260px] transition-all duration-300"
-          style={{ opacity: hovered ? 1 : 0.35 }}
-        >
-          <p className="text-[13px] text-white/50 font-light leading-relaxed">
-            {project.desc}
-          </p>
-          <div className="flex flex-wrap gap-2 mt-3">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-[10px] tracking-[0.15em] uppercase px-2 py-[3px] font-light"
-                style={{
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  color: "rgba(255,255,255,0.35)",
-                }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4 md:w-24 md:justify-end shrink-0">
-          <span className="text-[11px] tracking-[0.15em] text-white/20 font-light">{project.year}</span>
-          <div
-            className="transition-all duration-200"
-            style={{
-              color: "rgba(255,255,255,0.3)",
-              transform: hovered ? "translate(3px, -3px)" : "translate(0,0)",
-            }}
-          >
-            <ArrowRight />
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-// ─── Sections ──────────────────────────────────────────────────────────────────
-function WorkSection({ t }: { t: (typeof translations)["en"] }) {
-  return (
-    <section className="min-h-screen pt-32 pb-24 px-8 md:px-16 lg:px-24">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-        <p className="text-[11px] tracking-[0.25em] uppercase text-white/25 font-light mb-6">
-          {t.hero.label}
-        </p>
-        <h2
-          className="font-syne font-extrabold text-[clamp(48px,7vw,100px)] leading-[0.9] tracking-[-0.03em] mb-4"
-          style={{
-            background: "linear-gradient(105deg, #fff 40%, rgba(255,255,255,0.35) 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}
-        >
-          {t.hero.title.split("\n").map((line, i) => (
-            <span key={i}>{line}<br /></span>
-          ))}
-        </h2>
-        <p className="text-white/30 font-light text-[14px] mb-16">{t.hero.sub}</p>
-      </motion.div>
-
-      <div className="border-t" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
-        {t.projects.map((project, i) => (
-          <ProjectCard key={project.number} project={project} index={i} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
+// ─── About Section ─────────────────────────────────────────────────────────────
 function AboutSection({ t }: { t: (typeof translations)["en"] }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
@@ -457,6 +368,7 @@ function AboutSection({ t }: { t: (typeof translations)["en"] }) {
   );
 }
 
+// ─── Contact Section ───────────────────────────────────────────────────────────
 function ContactSection({ t }: { t: (typeof translations)["en"] }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
@@ -498,7 +410,9 @@ function ContactSection({ t }: { t: (typeof translations)["en"] }) {
             className="group flex items-center gap-2 text-white/40 font-light text-[13px] hover:text-white/80 transition-colors duration-200 sm:pl-2"
           >
             {t.contact.email}
-            <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform duration-200 group-hover:translate-x-1">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </a>
         </div>
       </motion.div>
@@ -516,6 +430,29 @@ export default function Portfolio({
 }) {
   const [activeSection, setActiveSection] = useState<Section>("work");
   const t = translations[lang];
+
+  // ── Auto-detect active section via IntersectionObserver ──
+  useEffect(() => {
+    const sections: Section[] = ["work", "about", "skills", "contact"];
+    const observers: IntersectionObserver[] = [];
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { threshold: 0.35 }
+      );
+
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
 
   const scrollToSection = (section: Section) => {
     setActiveSection(section);
@@ -539,10 +476,18 @@ export default function Portfolio({
         style={{ background: "radial-gradient(ellipse, rgba(120,60,220,0.07) 0%, transparent 70%)" }}
       />
 
-      <Header lang={lang} active={activeSection} onNav={scrollToSection} onBack={onBack ?? (() => {})} t={t} />
+      <Header active={activeSection} onNav={scrollToSection} onBack={onBack ?? (() => {})} t={t} />
 
       <main className="relative z-10">
-        <div id="work"><WorkSection t={t} /></div>
+        <div id="work">
+          <ProjectsSection
+            label={t.hero.label}
+            title={t.hero.title}
+            sub={t.hero.sub}
+            projects={t.projects}
+            lang={lang}
+          />
+        </div>
         <div id="about"><AboutSection t={t} /></div>
         <div id="skills">
           <SkillsBadges
@@ -554,7 +499,7 @@ export default function Portfolio({
         <div id="contact"><ContactSection t={t} /></div>
       </main>
 
-      <PortfolioFooter lang={lang}/>
+      <PortfolioFooter lang={lang} />
     </div>
   );
 }

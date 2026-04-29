@@ -16,8 +16,8 @@ const translations = {
     eyebrow: "Desenvolvedor & Criador",
     greeting: "Olá, eu sou",
     description: "Desenvolvedor fullstack focado em experiências interativas",
-    cta: "Ver portfólio",
-    ghost: "Entre em contato",
+    cta: "Veja meu portfólio",
+    ghost: "",
     based: "Baseado em",
     location: "Recife, Brasil",
   },
@@ -25,8 +25,8 @@ const translations = {
     eyebrow: "Developer & Creator",
     greeting: "Hi, I am",
     description: "Fullstack developer focused on interactive experiences",
-    cta: "View portfolio",
-    ghost: "Get in touch",
+    cta: "Take a look at my portfolio",
+    ghost: "",
     based: "Based in",
     location: "Recife, Brazil",
   },
@@ -224,14 +224,6 @@ export default function Home() {
             variants={fadeUp}
             className="absolute bottom-8 left-10 md:left-24 flex gap-6"
           >
-            {["GitHub", "LinkedIn", "Gmail"].map((s) => (
-              <span
-                key={s}
-                className="hoverable text-[10px] tracking-[0.2em] uppercase text-white/20 font-light cursor-pointer hover:text-white/55 transition-colors duration-200"
-              >
-                {s}
-              </span>
-            ))}
           </motion.div>
         </motion.div>
 
