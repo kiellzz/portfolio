@@ -22,7 +22,7 @@ const t = {
   en: {
     question: "Would you like to visit this project's repository?",
     confirm: "Visit repository",
-    cancel: "Not yet",
+    cancel: "Not now",
   },
 };
 

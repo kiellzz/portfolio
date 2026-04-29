@@ -292,7 +292,7 @@ function Header({
 
       {/* ── Mobile hamburger ── */}
       <button
-        className="md:hidden text-white/40 hover:text-white/80 transition-colors"
+        className="md:hidden text-white/60 hover:text-white/80 transition-colors"
         onClick={() => setMenuOpen(!menuOpen)}
       >
         <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
@@ -393,10 +393,10 @@ function AboutSection({ t }: { t: (typeof translations)["en"] }) {
               <span key={i}>{line}<br /></span>
             ))}
           </h2>
-          <p className="text-white/45 font-light text-[15px] leading-relaxed mb-4 max-w-md">
+          <p className="text-white/60 font-light text-[15px] leading-relaxed mb-4 max-w-md">
             {t.about.p1}
           </p>
-          <p className="text-white/30 font-light text-[15px] leading-relaxed max-w-md">
+          <p className="text-white/50 font-light text-[15px] leading-relaxed max-w-md">
             {t.about.p2}
           </p>
         </div>
@@ -453,7 +453,7 @@ function ContactSection({
           <h2 className="font-syne font-extrabold text-[clamp(45px,6vw,90px)] leading-[0.9] tracking-[-0.03em] mb-10 text-white whitespace-pre-line">
             {t.contact.title}
           </h2>
-          <p className="text-white/35 font-light text-[16px] leading-relaxed mb-12 max-w-sm">
+          <p className="text-white/55 font-light text-[16px] leading-relaxed mb-12 max-w-sm">
             {t.contact.sub}
           </p>
           <button 
@@ -472,7 +472,7 @@ function ContactSection({
           <h2 className="font-syne font-extrabold text-[clamp(45px,6vw,90px)] leading-[0.9] tracking-[-0.03em] mb-10 text-white whitespace-pre-line">
             {t.contact.cvTitle}
           </h2>
-          <p className="text-white/35 font-light text-[16px] leading-relaxed mb-12 max-w-sm">
+          <p className="text-white/55 font-light text-[16px] leading-relaxed mb-12 max-w-sm">
             {t.contact.cvDesc}
           </p>
           

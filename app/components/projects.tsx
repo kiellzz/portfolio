@@ -167,7 +167,7 @@ function ProjectCard({
       <div className="relative flex flex-col md:flex-row md:items-center gap-4 md:gap-0 px-0 py-8 md:py-10">
 
         {/* Number */}
-        <span className="text-[11px] tracking-[0.2em] text-white/20 font-light w-12 shrink-0">
+        <span className="text-[11px] tracking-[0.2em] text-white/35 font-light w-12 shrink-0">
           {project.number}
         </span>
 
@@ -179,7 +179,7 @@ function ProjectCard({
           >
             {project.name}
           </h3>
-          <p className="text-[11px] tracking-[0.18em] uppercase text-white/25 font-light mt-1">
+          <p className="text-[11px] tracking-[0.18em] uppercase text-white/40 font-light mt-1">
             {project.type}
           </p>
         </div>
@@ -212,19 +212,22 @@ function ProjectCard({
         {/* Description + tags */}
         <div
           className="md:w-[260px] md:pl-8 transition-all duration-300"
-          style={{ opacity: hovered ? 1 : 0.35 }}
         >
-          <p className="text-[13px] text-white/50 font-light leading-relaxed">
+          <p 
+            className="text-[13px] text-white/70 font-light leading-relaxed transition-all duration-300"
+            style={{ opacity: hovered ? 1 : 0.55 }}
+          >
             {project.desc}
           </p>
           <div className="flex flex-wrap gap-2 mt-3">
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-[10px] tracking-[0.15em] uppercase px-2 py-[3px] font-light"
+                className="text-[10px] tracking-[0.15em] uppercase px-2 py-[3px] font-light transition-all duration-300"
                 style={{
                   border: "1px solid rgba(255,255,255,0.12)",
-                  color: "rgba(255,255,255,0.35)",
+                  color: "rgba(255,255,255,0.70)",
+                  opacity: hovered ? 1 : 0.55,
                 }}
               >
                 {tag}
@@ -236,7 +239,7 @@ function ProjectCard({
         {/* Arrow */}
         <div className="flex items-center gap-4 md:w-24 md:justify-end shrink-0">
           {project.year && (
-            <span className="text-[11px] tracking-[0.15em] text-white/20 font-light">
+            <span className="text-[11px] tracking-[0.15em] text-white/35 font-light">
               {project.year}
             </span>
           )}
@@ -266,7 +269,7 @@ export default function ProjectsSection({ label, title, sub, projects, lang }: P
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
       >
-        <p className="text-[11px] tracking-[0.25em] uppercase text-white/25 font-light mb-6">
+        <p className="text-[11px] tracking-[0.25em] uppercase text-white/40 font-light mb-6">
           {label}
         </p>
         <h2
@@ -285,7 +288,7 @@ export default function ProjectsSection({ label, title, sub, projects, lang }: P
             </span>
           ))}
         </h2>
-        <p className="text-white/30 font-light text-[14px] mb-16">{sub}</p>
+        <p className="text-white/50 font-light text-[14px] mb-16">{sub}</p>
       </motion.div>
 
       <div className="border-t" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
