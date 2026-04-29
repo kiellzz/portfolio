@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Portfolio • Developer Website
 
-## Getting Started
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge\&logo=react\&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge\&logo=typescript\&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge\&logo=next.js\&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge\&logo=tailwind-css\&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge\&logo=framer\&logoColor=white)
 
-First, run the development server:
+This is my personal developer portfolio, built to showcase **real-world projects**, technical skills, and a strong focus on **user experience, interaction, and performance**.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+The goal is not just presentation — but to deliver a **product-like experience**.
+
+---
+
+## 🎯 Project Goal
+
+This project was built to:
+
+* Showcase real and practical projects
+* Highlight my technical skills
+* Create a memorable and modern portfolio experience
+
+## 🛠 Tech Stack
+
+### 🔹 Frontend
+
+* React
+* TypeScript
+* Next.js
+* Tailwind CSS
+* Framer Motion
+
+### 🔹 Concepts & Patterns
+
+* Component-based architecture
+* Section-based navigation
+* Intersection Observer (active section tracking)
+* Responsive design
+* UI animation and transitions
+
+---
+
+## 🚀 Features
+
+* 🧭 **Smooth Navigation**
+
+  * Scroll-based navigation between sections
+  * Active section detection
+
+* 🎯 **Dynamic UI**
+
+  * Animated transitions using Framer Motion
+  * Clean and minimal visual design
+
+* 🌍 **Multi-language Support**
+
+  * Portuguese / English toggle
+
+* 📱 **Responsive Design**
+
+  * Fully adaptable to different screen sizes
+
+* 🧩 **Modular Structure**
+
+  * Reusable and scalable components
+
+
+## ⚙️ Running Locally
+
+### 1. Clone the repository
+
+```bash id="cloneportfolio"
+git clone https://github.com/kiellzz/portfolio.git
+cd your-portfolio
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Install dependencies
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash id="installportfolio"
+npm install
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Run the project
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash id="runportfolio"
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> 📍 Running at: http://localhost:3000
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📌 Future Improvements
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* 🌐 Deploy and custom domain
+* 🧠 Add case studies for each project
+
+---
+
+## 👨‍💻 Author
+
+Developed by **Ezequiel Borges**
+
+* GitHub: https://github.com/kiellzz
+* LinkedIn: https://www.linkedin.com/in/ezequielborgesdev
+
+---
+
+## ⭐ Final Notes
+
+This portfolio reflects my approach to development:
+
+> Building experiences, not just interfaces.
+
+Every detail — from animation to structure — was designed with intention.
