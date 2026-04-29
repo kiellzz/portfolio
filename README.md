@@ -55,6 +55,7 @@ This project was built to:
 ### 🌍 Multi-language Support
 
 - Portuguese / English toggle  
+- CV available in both languages
 
 ### 📱 Responsive Design
 
