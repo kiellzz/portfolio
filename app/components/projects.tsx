@@ -215,7 +215,7 @@ function ProjectCard({
         >
           <p 
             className="text-[13px] text-white/70 font-light leading-relaxed transition-all duration-300"
-            style={{ opacity: hovered ? 1 : 0.55 }}
+            style={{ opacity: hovered ? 0.9 : 0.72 }}
           >
             {project.desc}
           </p>
@@ -227,7 +227,7 @@ function ProjectCard({
                 style={{
                   border: "1px solid rgba(255,255,255,0.12)",
                   color: "rgba(255,255,255,0.70)",
-                  opacity: hovered ? 1 : 0.55,
+                  opacity: hovered ? 0.9 : 0.72,
                 }}
               >
                 {tag}
