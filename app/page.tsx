@@ -15,7 +15,7 @@ const translations = {
   pt: {
     eyebrow: "Desenvolvedor & Criador",
     greeting: "Olá, eu sou",
-    description: "Desenvolvedor fullstack focado em experiências interativas",
+    description: "Desenvolvedor Fullstack focado em experiências interativas",
     cta: "Veja meu portfólio",
     ghost: "",
     based: "Baseado em",

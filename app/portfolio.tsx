@@ -5,24 +5,25 @@ import { motion, AnimatePresence, useInView } from "framer-motion";
 import PortfolioFooter from "./components/portfolioFooter";
 import SkillsBadges from "./components/skillsBadges";
 import ProjectsSection from "./components/projects";
+import ContactModal from "./components/contactModal";
+import CVModal from "./components/CVModal"; 
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 type Lang = "pt" | "en";
-type Section = "work" | "about" | "skills" | "contact";
+type Section = "projects" | "about" | "skills" | "contact";
 
 // ─── Translations ──────────────────────────────────────────────────────────────
 const translations = {
   pt: {
     nav: {
-      work: "Trabalhos",
+      projects: "Projetos",
       about: "Sobre",
       skills: "Skills",
-      contact: "Contato",
+      contact: "Contato e CV",
     },
     back: "Voltar",
-    available: "Disponível para projetos",
     hero: {
-      label: "Portfólio selecionado",
+      label: "Meu portfólio",
       title: "O que\nconstruí.",
       sub: "Projetos reais, soluções reais.",
     },
@@ -31,7 +32,7 @@ const translations = {
         number: "01",
         name: "Ballers",
         type: "Website · Frontend · Game",
-        desc: "Simulador de futebol interativo que combina o gerenciamento de cartas estilo FIFA a um motor de jogo focado em decisões e duelos de atributos.",
+        desc: "Simulador de futebol interativo que combina o gerenciamento de cartas inspirado no EA FC a um motor de jogo focado em decisões e duelos de atributos.",
         tags: ["React", "TypeScript", "Vite"],
         video: "/videos/ballers.mp4",
         repo: "https://github.com/kiellzz/ballers-game",
@@ -57,7 +58,7 @@ const translations = {
     ],
     about: {
       label: "Sobre mim",
-      title: "Código com\nintenção.",
+      title: "Código com\nintenção",
       p1: "Sou estudante de Análise e Desenvolvimento de Sistemas no 4º período da Faculdade Senac, com foco em resolver problemas e desenvolver projetos que aliam alto desempenho técnico a experiências de design memoráveis.",
       p2: "Estou em busca de oportunidades de estágio e emprego, onde cada detalhe importa, desde a arquitetura do sistema até a interface do usuário.",
       exp: "2024 - 2026",
@@ -77,7 +78,7 @@ const translations = {
         {
           name: "Backend",
           color: "#34d399",
-          items: ["Node.js", "Express.js", "Python", "MongoDB", "MySQL", "Multer", "FFMPEG"],
+          items: ["Node.js", "Express.js", "MongoDB", "MySQL", "Multer", "FFMPEG"],
         },
         {
           name: "Ferramentas",
@@ -87,24 +88,27 @@ const translations = {
       ],
     },
     contact: {
-      label: "Vamos conversar",
-      title: "Próximo\nprojeto.",
-      sub: "Aberto para freelance, trabalho remoto e colaborações criativas.",
-      cta: "Enviar mensagem",
-      email: "ezequielborgesdev@gmail.com",
+      label: "Vamos conversar!",
+      title: "Próximo\nprojeto",
+      sub: "Pronto para encarar desafios, adaptável a diferentes contextos e aberto a oportunidades freelance, presenciais e remotas, com foco em soluções criativas.",
+      cta: "Envie-me uma mensagem",
+      email: "", 
+      cvLabel: "Meu currículo",
+      cvTitle: "Acesse meu\nhistórico",
+      cvDesc: "Arquivo PDF com minhas skills, formação acadêmica e portfólio",
+      cvCta: "Visualizar meu currículo",
     },
   },
   en: {
     nav: {
-      work: "Work",
+      projects: "Projects",
       about: "About",
       skills: "Skills",
-      contact: "Contact",
+      contact: "Contact & CV",
     },
-    back: "Back",
-    available: "Available for projects",
+    back: "Go Back",
     hero: {
-      label: "Selected portfolio",
+      label: "My Portfolio",
       title: "What I've\nbuilt.",
       sub: "Real projects, real solutions.",
     },
@@ -113,7 +117,7 @@ const translations = {
         number: "01",
         name: "Ballers",
         type: "Website · Frontend · Game",
-        desc: "Interactive football simulator that combines FIFA-style card management with a gameplay engine focused on decisions and attribute-based duels.",
+        desc: "An interactive football simulator blending EA FC style card management with a decision-driven game engine centered on attribute-based duels.",
         tags: ["React", "TypeScript", "Vite"],
         video: "/videos/ballers.mp4",
         repo: "https://github.com/kiellzz/ballers-game",
@@ -139,7 +143,7 @@ const translations = {
     ],
     about: {
       label: "About me",
-      title: "Code with\nintention.",
+      title: "Code with\nintention",
       p1: "I'm a Systems Analysis and Development program student in my 4th semester at Senac College (Brazil), passionate about problem-solving and building interfaces that combine technical performance with memorable design.",
       p2: "I'm currently looking for internship and job opportunities, where every detail matters, from system architecture to the final UI on screen.",
       exp: "2024 - 2026",
@@ -149,7 +153,7 @@ const translations = {
     },
     skills: {
       label: "Tech stack",
-      title: "Tools I\nmaster.",
+      title: "Tools I\nmaster",
       categories: [
         {
           name: "Frontend",
@@ -159,7 +163,7 @@ const translations = {
         {
           name: "Backend",
           color: "#34d399",
-          items: ["Node.js", "Express.js", "Python", "MongoDB", "MySQL", "Multer", "FFMPEG"],
+          items: ["Node.js", "Express.js", "MongoDB", "MySQL", "Multer", "FFMPEG"],
         },
         {
           name: "Tools",
@@ -169,11 +173,15 @@ const translations = {
       ],
     },
     contact: {
-      label: "Let's talk",
-      title: "Next\nproject.",
-      sub: "Open for freelance, remote work and creative collaborations.",
-      cta: "Send message",
-      email: "ezequielborgesdev@gmail.com",
+      label: "Let's talk!",
+      title: "Next\nproject",
+      sub: "Ready to take on challenges, adaptable to different contexts, and open to freelance and remote opportunities, with a focus on creative solutions.",
+      cta: "Send me a message",
+      email: "", 
+      cvLabel: "Resume",
+      cvTitle: "Check my\nbackground",
+      cvDesc: "PDF file with my skills, academic background, and portfolio.",
+      cvCta: "View Resume",
     },
   },
 };
@@ -183,15 +191,19 @@ function Header({
   active,
   onNav,
   onBack,
+  lang,
+  onLangChange,
   t,
 }: {
   active: Section;
   onNav: (s: Section) => void;
   onBack: () => void;
+  lang: Lang;
+  onLangChange: (l: Lang) => void;
   t: (typeof translations)["en"];
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const navItems: Section[] = ["work", "about", "skills", "contact"];
+  const navItems: Section[] = ["projects", "about", "skills", "contact"];
 
   return (
     <motion.header
@@ -205,22 +217,21 @@ function Header({
         borderBottom: "1px solid rgba(255,255,255,0.06)",
       }}
     >
-      {/* ── Back button — more prominent ── */}
+      {/* ── Back button ── */}
       <button
         onClick={onBack}
         className="group flex items-center gap-2 transition-colors duration-200"
       >
-        <span
-          className="flex items-center justify-center w-6 h-6 transition-all duration-200 group-hover:-translate-x-[2px]"
-          style={{
-            border: "1px solid rgba(255,255,255,0.2)",
-            color: "rgba(255,255,255,0.6)",
-          }}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 486.975 486.975"
+          width="16"
+          height="16"
+          fill="currentColor"
+          className="text-white/50 group-hover:text-white/90 transition-colors duration-200 group-hover:-translate-x-[2px] transition-transform"
         >
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path d="M7 1L3 5l4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </span>
+          <path d="M473.475,230.025h-427.4l116-116c5.3-5.3,5.3-13.8,0-19.1c-5.3-5.3-13.8-5.3-19.1,0l-139,139c-5.3,5.3-5.3,13.8,0,19.1l139,139c2.6,2.6,6.1,4,9.5,4s6.9-1.3,9.5-4c5.3-5.3,5.3-13.8,0-19.1l-116-116h427.5c7.5,0,13.5-6,13.5-13.5S480.975,230.025,473.475,230.025z"/>
+        </svg>
         <span className="text-[11px] tracking-[0.2em] uppercase font-light text-white/60 group-hover:text-white/90 transition-colors duration-200">
           {t.back}
         </span>
@@ -247,18 +258,36 @@ function Header({
         ))}
       </nav>
 
-      {/* ── Available badge — more prominent ── */}
-      <div
-        className="hidden md:flex items-center gap-2 px-3 py-[6px]"
-        style={{
-          border: "1px solid rgba(52,211,153,0.3)",
-          background: "rgba(52,211,153,0.06)",
-        }}
-      >
-        <span className="w-[6px] h-[6px] rounded-full bg-emerald-400 animate-pulse shrink-0" />
-        <span className="text-[10px] tracking-[0.18em] uppercase text-emerald-400/80 font-light">
-          {t.available}
-        </span>
+      {/* ── Language switcher (desktop) ── */}
+      <div className="hidden md:flex items-center gap-2">
+        {(["pt", "en"] as Lang[]).map((l) => (
+          <button
+            key={l}
+            onClick={() => onLangChange(l)}
+            title={l === "pt" ? "Português" : "English"}
+            className="relative overflow-hidden transition-all duration-200 hover:-translate-y-[1px]"
+            style={{
+              width: 28,
+              height: 20,
+              borderRadius: 2,
+              outline: lang === l
+                ? "1.5px solid rgba(255,255,255,0.55)"
+                : "1.5px solid rgba(255,255,255,0.12)",
+              filter: lang === l ? "none" : "grayscale(1) brightness(0.6)",
+              boxShadow: lang === l ? "0 0 0 1px rgba(255,255,255,0.08)" : "none",
+            }}
+          >
+            <img
+              src={
+                l === "pt"
+                  ? "https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.11.1/flags/4x3/br.svg"
+                  : "https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.11.1/flags/4x3/us.svg"
+              }
+              alt={l === "pt" ? "PT" : "EN"}
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            />
+          </button>
+        ))}
       </div>
 
       {/* ── Mobile hamburger ── */}
@@ -296,6 +325,37 @@ function Header({
                 {t.nav[item]}
               </button>
             ))}
+
+            {/* ── Language switcher (mobile) ── */}
+            <div className="flex items-center gap-3 px-8 pt-4 pb-1">
+              {(["pt", "en"] as Lang[]).map((l) => (
+                <button
+                  key={l}
+                  onClick={() => { onLangChange(l); setMenuOpen(false); }}
+                  title={l === "pt" ? "Português" : "English"}
+                  className="relative overflow-hidden transition-all duration-200"
+                  style={{
+                    width: 28,
+                    height: 20,
+                    borderRadius: 2,
+                    outline: lang === l
+                      ? "1.5px solid rgba(255,255,255,0.55)"
+                      : "1.5px solid rgba(255,255,255,0.12)",
+                    filter: lang === l ? "none" : "grayscale(1) brightness(0.6)",
+                  }}
+                >
+                  <img
+                    src={
+                      l === "pt"
+                        ? "https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.11.1/flags/4x3/br.svg"
+                        : "https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.11.1/flags/4x3/us.svg"
+                    }
+                    alt={l === "pt" ? "PT" : "EN"}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  />
+                </button>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -369,71 +429,87 @@ function AboutSection({ t }: { t: (typeof translations)["en"] }) {
 }
 
 // ─── Contact Section ───────────────────────────────────────────────────────────
-function ContactSection({ t }: { t: (typeof translations)["en"] }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-
+function ContactSection({ 
+  t, 
+  onOpenModal, 
+  onOpenCV 
+}: { 
+  t: any, 
+  onOpenModal: () => void, 
+  onOpenCV: () => void 
+}) {
   return (
-    <section ref={ref} className="min-h-screen pt-32 pb-24 px-8 md:px-16 lg:px-24 flex flex-col justify-center">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7 }}
-        className="max-w-2xl"
-      >
-        <p className="text-[11px] tracking-[0.25em] uppercase text-white/25 font-light mb-6">
-          {t.contact.label}
-        </p>
-        <h2
-          className="font-syne font-extrabold text-[clamp(52px,8vw,120px)] leading-[0.88] tracking-[-0.03em] mb-8"
-          style={{
-            background: "linear-gradient(105deg, #fff 40%, rgba(255,255,255,0.35) 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}
-        >
-          {t.contact.title.split("\n").map((line, i) => (
-            <span key={i}>{line}<br /></span>
-          ))}
-        </h2>
-        <p className="text-white/35 font-light text-[15px] leading-relaxed mb-12 max-w-sm">
-          {t.contact.sub}
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4">
-          <button className="bg-white text-[#080808] font-syne font-bold text-[13px] tracking-[0.08em] uppercase px-10 py-[15px] hover:bg-white/88 transition-all duration-200 hover:-translate-y-[2px]">
+    <section className="relative w-full min-h-screen py-32 px-8 md:px-16 lg:px-24 flex items-center bg-transparent">
+      {/* Removido o mx-auto e centralização do container. 
+          Agora ele se alinha à esquerda acompanhando o padding da section (px-8/16/24)
+      */}
+      <div className="grid md:grid-cols-2 w-full max-w-[1400px] items-stretch">
+        
+        {/* LADO ESQUERDO: CONTATO (Mesma posição de 'Ferramentas que domino') */}
+        <div className="flex flex-col items-start text-left">
+          <p className="text-[11px] tracking-[0.25em] uppercase text-white/25 mb-8">
+            {t.contact.label}
+          </p>
+          <h2 className="font-syne font-extrabold text-[clamp(45px,6vw,90px)] leading-[0.9] tracking-[-0.03em] mb-10 text-white whitespace-pre-line">
+            {t.contact.title}
+          </h2>
+          <p className="text-white/35 font-light text-[16px] leading-relaxed mb-12 max-w-sm">
+            {t.contact.sub}
+          </p>
+          <button 
+            onClick={onOpenModal}
+            className="bg-white text-black font-syne font-bold text-[13px] uppercase px-10 py-5 hover:bg-[#eee] transition-all mt-auto"
+          >
             {t.contact.cta}
           </button>
-          <a
-            href={`mailto:${t.contact.email}`}
-            className="group flex items-center gap-2 text-white/40 font-light text-[13px] hover:text-white/80 transition-colors duration-200 sm:pl-2"
-          >
-            {t.contact.email}
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform duration-200 group-hover:translate-x-1">
-              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </a>
         </div>
-      </motion.div>
+
+        {/* LADO DIREITO: CURRÍCULO (Arrastado para a direita) */}
+        <div className="flex flex-col items-start text-left md:ml-auto md:pl-20">
+          <p className="text-[11px] tracking-[0.25em] uppercase text-white/25 mb-8">
+            {t.contact.cvLabel}
+          </p>
+          <h2 className="font-syne font-extrabold text-[clamp(45px,6vw,90px)] leading-[0.9] tracking-[-0.03em] mb-10 text-white whitespace-pre-line">
+            {t.contact.cvTitle}
+          </h2>
+          <p className="text-white/35 font-light text-[16px] leading-relaxed mb-12 max-w-sm">
+            {t.contact.cvDesc}
+          </p>
+          
+          <button 
+            onClick={onOpenCV}
+            className="bg-white text-black font-syne font-bold text-[13px] uppercase px-10 py-5 hover:bg-[#eee] transition-all flex items-center gap-3 group mt-auto"
+          >
+            {t.contact.cvCta}
+            <span className="group-hover:translate-x-1 transition-transform">→</span>
+          </button>
+        </div>
+
+      </div>
     </section>
   );
 }
 
 // ─── Portfolio Page ────────────────────────────────────────────────────────────
 export default function Portfolio({
-  lang = "en",
+  lang: initialLang = "en",
   onBack,
 }: {
   lang?: Lang;
   onBack?: () => void;
 }) {
-  const [activeSection, setActiveSection] = useState<Section>("work");
+  const [lang, setLang] = useState<Lang>(initialLang);
+  const [activeSection, setActiveSection] = useState<Section>("projects");
+  
+  // Estados dos Modais
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCVModalOpen, setIsCVModalOpen] = useState(false);
+  
   const t = translations[lang];
 
   // ── Auto-detect active section via IntersectionObserver ──
   useEffect(() => {
-    const sections: Section[] = ["work", "about", "skills", "contact"];
+    const sections: Section[] = ["projects", "about", "skills", "contact"];
     const observers: IntersectionObserver[] = [];
 
     sections.forEach((id) => {
@@ -461,7 +537,28 @@ export default function Portfolio({
 
   return (
     <div className="min-h-screen w-full bg-[#080808] text-white overflow-x-hidden cursor-none relative">
-      {/* Noise texture */}
+      
+      {/* Modais com AnimatePresence para transições suaves */}
+      <AnimatePresence mode="wait">
+        {isModalOpen && (
+          <ContactModal 
+            key="contact-modal"
+            isOpen={isModalOpen} 
+            onClose={() => setIsModalOpen(false)} 
+            lang={lang} 
+          />
+        )}
+        {isCVModalOpen && (
+          <CVModal 
+            key="cv-modal"
+            isOpen={isCVModalOpen} 
+            onClose={() => setIsCVModalOpen(false)} 
+            lang={lang} 
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Noise texture & Background FX */}
       <div
         className="fixed inset-0 z-0 pointer-events-none opacity-[0.035]"
         style={{
@@ -469,17 +566,22 @@ export default function Portfolio({
           backgroundSize: "150px 150px",
         }}
       />
-
-      {/* Ambient blob */}
       <div
         className="fixed top-0 right-0 w-[50vw] h-[50vw] rounded-full pointer-events-none z-0"
         style={{ background: "radial-gradient(ellipse, rgba(120,60,220,0.07) 0%, transparent 70%)" }}
       />
 
-      <Header active={activeSection} onNav={scrollToSection} onBack={onBack ?? (() => {})} t={t} />
+      <Header
+        active={activeSection}
+        onNav={scrollToSection}
+        onBack={onBack ?? (() => {})}
+        lang={lang}
+        onLangChange={setLang}
+        t={t}
+      />
 
       <main className="relative z-10">
-        <div id="work">
+        <section id="projects">
           <ProjectsSection
             label={t.hero.label}
             title={t.hero.title}
@@ -487,16 +589,27 @@ export default function Portfolio({
             projects={t.projects}
             lang={lang}
           />
-        </div>
-        <div id="about"><AboutSection t={t} /></div>
-        <div id="skills">
+        </section>
+        
+        <section id="about">
+          <AboutSection t={t} />
+        </section>
+        
+        <section id="skills">
           <SkillsBadges
             label={t.skills.label}
             title={t.skills.title}
             categories={t.skills.categories}
           />
-        </div>
-        <div id="contact"><ContactSection t={t} /></div>
+        </section>
+        
+        <section id="contact">
+          <ContactSection 
+            t={t} 
+            onOpenModal={() => setIsModalOpen(true)} 
+            onOpenCV={() => setIsCVModalOpen(true)} 
+          />
+        </section>
       </main>
 
       <PortfolioFooter lang={lang} />

@@ -152,6 +152,7 @@ function ProjectCard({
       className="group relative border-b cursor-pointer"
       style={{ borderColor: "rgba(255,255,255,0.07)" }}
     >
+      {/* Background Gradient Sutil (mantido para todos) */}
       <div
         className="absolute inset-0 transition-opacity duration-300 pointer-events-none"
         style={{
@@ -160,7 +161,8 @@ function ProjectCard({
         }}
       />
 
-      <WaveEffect visible={hovered} />
+      {/* Renderiza as ondas roxas apenas se NÃO for o projeto 04 */}
+      {project.number !== "04" && <WaveEffect visible={hovered} />}
 
       <div className="relative flex flex-col md:flex-row md:items-center gap-4 md:gap-0 px-0 py-8 md:py-10">
 
@@ -182,14 +184,13 @@ function ProjectCard({
           </p>
         </div>
 
-        {/* Video */}
-        {project.video && (
+        {/* Video ou Espaçador Vazio */}
+       {project.video ? (
           <div
-            className="shrink-0 overflow-hidden"
+            className="shrink-0 overflow-hidden border border-white/25"
             style={{
               width: 280,
               aspectRatio: "16/9",
-              border: "1px solid rgba(255,255,255,0.25)",
             }}
           >
             <video
@@ -201,6 +202,11 @@ function ProjectCard({
               className="w-full h-full object-cover"
             />
           </div>
+        ) : (
+          <div 
+            className="shrink-0 hidden md:block" 
+            style={{ width: 280, aspectRatio: "16/9" }} 
+          />
         )}
 
         {/* Description + tags */}

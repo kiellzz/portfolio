@@ -14,8 +14,8 @@ export default function LanguageModal({ onSelect }: LanguageModalProps) {
         <h2 className="text-3xl font-bold mb-3 tracking-tighter text-white font-syne">
           Select Language
         </h2>
-        <p className="text-gray-500 mb-10 text-[10px] font-medium uppercase tracking-[0.2em]">
-          Choose your experience
+        <p className="text-gray-500 mb-10 text-[13px] font-medium uppercase tracking-[0.2em]">
+          PICK YOUR PREFERENCE
         </p>
 
         <div className="flex flex-col gap-4">
@@ -56,7 +56,7 @@ export default function LanguageModal({ onSelect }: LanguageModalProps) {
           </button>
         </div>
 
-        <p className="mt-8 text-gray-600 text-[10px] italic font-light">
+        <p className="mt-8 text-gray-600 text-[12px] italic font-light">
           Experience tailored for your region.
         </p>
       </div>
