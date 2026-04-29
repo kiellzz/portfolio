@@ -107,13 +107,3 @@ Developed by **Ezequiel Borges**
 
 * GitHub: https://github.com/kiellzz
 * LinkedIn: https://www.linkedin.com/in/ezequielborgesdev
-
----
-
-## ⭐ Final Notes
-
-This portfolio reflects my approach to development:
-
-> Building experiences, not just interfaces.
-
-Every detail — from animation to structure — was designed with intention.
