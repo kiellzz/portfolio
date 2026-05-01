@@ -53,50 +53,7 @@ function ArrowRight() {
   );
 }
 
-// ─── Custom Cursor ────────────────────────────────────────────────────────────
-function CustomCursor() {
-  const [pos, setPos] = useState({ x: -100, y: -100 });
-  const [hovered, setHovered] = useState(false);
 
-  useEffect(() => {
-    const move = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY });
-    const over = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest("button, a, .hoverable"))
-        setHovered(true);
-    };
-    const out = () => setHovered(false);
-
-    window.addEventListener("mousemove", move);
-    window.addEventListener("mouseover", over);
-    window.addEventListener("mouseout", out);
-    return () => {
-      window.removeEventListener("mousemove", move);
-      window.removeEventListener("mouseover", over);
-      window.removeEventListener("mouseout", out);
-    };
-  }, []);
-
-  return (
-    <>
-      <div
-        className="fixed z-[9999] w-[6px] h-[6px] bg-white rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 transition-transform duration-100"
-        style={{ left: pos.x, top: pos.y }}
-      />
-      <div
-        className="fixed z-[9998] rounded-full border pointer-events-none -translate-x-1/2 -translate-y-1/2 transition-all duration-[250ms]"
-        style={{
-          left: pos.x,
-          top: pos.y,
-          width: hovered ? 48 : 32,
-          height: hovered ? 48 : 32,
-          borderColor: hovered
-            ? "rgba(255,255,255,0.6)"
-            : "rgba(255,255,255,0.3)",
-        }}
-      />
-    </>
-  );
-}
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Home() {
@@ -135,15 +92,11 @@ export default function Home() {
   // ── Home ───────────────────────────────────────────────────────────────────
   return (
     <>
-      <div className="hidden md:block">
-        <CustomCursor />
-      </div>
-
       <AnimatePresence mode="wait">
         {!lang && <LanguageModal onSelect={setLang} />}
       </AnimatePresence>
 
-      <main className="h-screen w-full bg-[#080808] text-white overflow-hidden relative cursor-none flex flex-col md:flex-row">
+      <main className="h-screen w-full bg-[#080808] text-white overflow-hidden relative flex flex-col md:flex-row">
 
         {/* Noise texture */}
         <div

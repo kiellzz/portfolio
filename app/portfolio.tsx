@@ -536,8 +536,7 @@ export default function Portfolio({
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#080808] text-white overflow-x-hidden cursor-none relative">
-      
+    <div className="min-h-screen w-full bg-[#080808] text-white overflow-x-hidden relative">
       {/* Modais com AnimatePresence para transições suaves */}
       <AnimatePresence mode="wait">
         {isModalOpen && (
