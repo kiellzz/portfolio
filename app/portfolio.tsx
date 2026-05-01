@@ -81,9 +81,9 @@ const translations = {
           items: ["Node.js", "Express.js", "MongoDB", "MySQL", "Multer", "FFMPEG"],
         },
         {
-          name: "Ferramentas",
+          name: "Tools",
           color: "#fb923c",
-          items: ["Git", "GitHub", "Vercel", "Render", "Figma", "Canva"],
+          items: ["Git", "GitHub", "Vercel", "Render", "Figma", "Canva", "Prompt Engineering"],
         },
       ],
     },
@@ -168,7 +168,7 @@ const translations = {
         {
           name: "Tools",
           color: "#fb923c",
-          items: ["Git", "GitHub", "Vercel", "Render", "Figma", "Canva"],
+          items: ["Git", "GitHub", "Vercel", "Render", "Figma", "Canva", "Prompt Engineering"],
         },
       ],
     },
