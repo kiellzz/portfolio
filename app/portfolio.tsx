@@ -31,7 +31,7 @@ const translations = {
       {
         number: "01",
         name: "Ballers",
-        type: "Website · Frontend · Game",
+        type: "Website · Frontend/Deploy · Game",
         desc: "Simulador de futebol interativo que combina o gerenciamento de cartas inspirado no EA FC a um motor de jogo focado em decisões e duelos de atributos.",
         tags: ["React", "TypeScript", "Vite"],
         video: "/videos/ballers.mp4",
@@ -116,7 +116,7 @@ const translations = {
       {
         number: "01",
         name: "Ballers",
-        type: "Website · Frontend · Game",
+        type: "Website · Frontend/Deploy · Game",
         desc: "An interactive football simulator blending EA FC style card management with a decision-driven game engine centered on attribute-based duels.",
         tags: ["React", "TypeScript", "Vite"],
         video: "/videos/ballers.mp4",
