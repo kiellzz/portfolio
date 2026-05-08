@@ -40,7 +40,7 @@ const translations = {
       {
         number: "02",
         name: "EZSaldo",
-        type: "Webiste · Fullstack · App financeiro",
+        type: "Webiste · Fullstack/Deploy · App financeiro",
         desc: "Aplicação de gestão financeira fullstack com dashboard dinâmico, focada em uma experiência de usuário limpa e controle de saldo em tempo real.",
         tags: ["HTML", "CSS", "JavaScript", "Node.js"],
         video: "/videos/ezsaldo.mp4",
@@ -125,7 +125,7 @@ const translations = {
       {
         number: "02",
         name: "EZSaldo",
-        type: "Website · Fullstack · Financial App",
+        type: "Website · Fullstack/Deploy · Financial App",
         desc: "Fullstack financial management application with a dynamic dashboard, focused on a clean user experience and real-time balance tracking.",
         tags: ["HTML", "CSS", "JavaScript", "Node.js"],
         video: "/videos/ezsaldo.mp4",
