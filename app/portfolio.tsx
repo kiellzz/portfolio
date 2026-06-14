@@ -78,7 +78,7 @@ const translations = {
         {
           name: "Backend",
           color: "#34d399",
-          items: ["Node.js", "Express.js", "MongoDB", "MySQL", "Multer", "FFMPEG"],
+          items: ["Node.js", "Python", "Express.js", "MongoDB", "MySQL", "Multer", "FFMPEG"],
         },
         {
           name: "Tools",
@@ -163,7 +163,7 @@ const translations = {
         {
           name: "Backend",
           color: "#34d399",
-          items: ["Node.js", "Express.js", "MongoDB", "MySQL", "Multer", "FFMPEG"],
+          items: ["Node.js", "Python", "Express.js", "MongoDB", "MySQL", "Multer", "FFMPEG"],
         },
         {
           name: "Tools",
