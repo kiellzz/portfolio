@@ -15,7 +15,7 @@ const translations = {
   pt: {
     eyebrow: "Desenvolvedor & Criador",
     greeting: "Olá, eu sou",
-    description: "Desenvolvedor Fullstack focado em experiências interativas",
+    description: "React & TypeScript — de games a dashboards, foco em interfaces que têm alma",
     cta: "Veja meu portfólio",
     ghost: "",
     based: "Baseado em",
@@ -24,7 +24,7 @@ const translations = {
   en: {
     eyebrow: "Developer & Creator",
     greeting: "Hi, I am",
-    description: "Fullstack developer focused on interactive experiences",
+    description: "React & TypeScript — from games to dashboards, building interfaces with soul",
     cta: "Take a look at my portfolio",
     ghost: "",
     based: "Based in",
@@ -107,6 +107,20 @@ export default function Home() {
           }}
         />
 
+        {/* Technical grid */}
+        <div
+          className="absolute inset-0 z-0 pointer-events-none"
+          style={{
+            backgroundImage: `
+      linear-gradient(rgba(124,58,237,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,58,237,0.045) 1px, transparent 1px)
+    `,
+            backgroundSize: "48px 48px",
+            maskImage: "linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 55%, transparent 75%)",
+            WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 55%, transparent 75%)",
+          }}
+        />
+
         {/* Ambient blobs */}
         <div
           className="absolute -top-[20%] -left-[10%] w-[70vw] h-[70vw] rounded-full pointer-events-none z-0 animate-blob-1"
@@ -116,6 +130,25 @@ export default function Home() {
           className="absolute -bottom-[20%] -right-[10%] w-[55vw] h-[55vw] rounded-full pointer-events-none z-0 animate-blob-2"
           style={{ background: "radial-gradient(ellipse, rgba(255,255,255,0.04) 0%, transparent 70%)" }}
         />
+
+        {/* Floating particles */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          {[...Array(18)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full"
+              style={{
+                width: `${1 + (i % 3) * 0.7}px`,
+                height: `${1 + ((i * 5) % 3) * 0.65}px`,
+                background: i % 3 === 0 ? "rgba(124,58,237,0.6)" : "rgba(255,255,255,0.2)",
+                left: `${30 + ((i * 19) % 40)}%`,
+                bottom: `${3 + ((i * 23) % 42)}%`,
+                animation: `floatParticle ${6 + ((i * 7) % 8)}s ease-in-out infinite`,
+                animationDelay: `${((i * 0.43) % 5).toFixed(2)}s`,
+              }}
+            />
+          ))}
+        </div>
 
         {/* LEFT — Text section */}
         <motion.div
@@ -127,8 +160,9 @@ export default function Home() {
         >
           <motion.p
             variants={fadeUp}
-            className="text-[11px] tracking-[0.25em] uppercase text-white/35 font-light mb-7"
+            className="text-[11px] tracking-[0.25em] uppercase text-white/55 font-light mb-7"
           >
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#7C3AED] mr-3 mb-[1px] align-middle" />
             {t.eyebrow}
           </motion.p>
 
@@ -148,6 +182,8 @@ export default function Home() {
             >
               Ezequiel
               <br />
+            </span>
+            <span className="text-[#7C3AED]">
               Borges.
             </span>
           </motion.h1>
@@ -163,12 +199,9 @@ export default function Home() {
             {/* ← botão agora chama setPage("portfolio") */}
             <button
               onClick={() => setPage("portfolio")}
-              className="bg-white text-[#080808] font-syne font-bold text-[13px] tracking-[0.08em] uppercase px-9 py-[15px] hover:bg-white/88 transition-all duration-200 hover:-translate-y-[2px]"
+              className="group flex items-center gap-3 bg-white text-[#080808] font-syne font-bold text-[13px] tracking-[0.08em] uppercase px-9 py-[15px] hover:bg-white/88 transition-all duration-200 hover:-translate-y-[2px]"
             >
               {t.cta}
-            </button>
-            <button className="group flex items-center gap-2 text-white/45 font-light text-[13px] hover:text-white/90 transition-colors duration-200 border-none bg-transparent">
-              {t.ghost}
               <ArrowRight />
             </button>
           </motion.div>
@@ -214,15 +247,20 @@ export default function Home() {
             className="absolute bottom-9 right-9 z-30 flex flex-col gap-1 px-5 py-3"
             style={{
               background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(255,255,255,0.08)",
+              border: "1px solid rgba(124,58,237,0.35)",
               backdropFilter: "blur(12px)",
               borderRadius: "12px",
+              boxShadow: "0 0 18px rgba(124,58,237,0.12), inset 0 0 0 1px rgba(255,255,255,0.04)",
             }}
           >
-            <span className="text-[9px] tracking-[0.25em] uppercase text-white/30 font-light">
+            <span className="text-[9px] tracking-[0.25em] uppercase text-white/50 font-light">
               {t.based}
             </span>
             <div className="flex items-center gap-2">
+              <span className="relative flex h-2 w-2 mr-1">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#7C3AED] opacity-50" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#7C3AED]" />
+              </span>
               <span className="font-syne font-bold text-[13px] tracking-tight text-white/90">
                 {t.location}
               </span>
