@@ -13,7 +13,7 @@ This is my personal developer portfolio, built to showcase **real-world projects
 
 ## 🔗 Live Demo
 Access it now:
-**[https://portfolio-two-kohl-80.vercel.app/](https://portfolio-two-kohl-80.vercel.app/)**
+**[portfolioezequielborges.vercel.app/](portfolioezequielborges.vercel.app)**
 
 ---
 
