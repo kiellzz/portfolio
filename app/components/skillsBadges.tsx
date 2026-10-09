@@ -1,22 +1,8 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-
-// ─── Devicon stylesheet (injected once) ──────────────────────────────────────
-function useDevicon() {
-  useEffect(() => {
-    const id = "devicon-css";
-    if (document.getElementById(id)) return;
-    const link = document.createElement("link");
-    link.id = id;
-    link.rel = "stylesheet";
-    link.type = "text/css";
-    link.href =
-      "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css";
-    document.head.appendChild(link);
-  }, []);
-}
+import TechIcon from "./techIcon";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 type SkillCategory = {
@@ -30,77 +16,6 @@ type SkillsBadgesProps = {
   title?: string;
   categories: SkillCategory[];
 };
-
-// ─── Devicon class map ────────────────────────────────────────────────────────
-// Maps skill name → devicon CSS class.
-// Falls back to a generic SVG icon if not listed here.
-const deviconClass: Record<string, string> = {
-  // Frontend
-  React:            "devicon-react-original",
-  JavaScript:       "devicon-javascript-plain",
-  TypeScript:       "devicon-typescript-plain",
-  "Next.js":        "devicon-nextjs-original-wordmark",
-  "React Native":   "devicon-reactnative-original-wordmark",
-  "Tailwind CSS":   "devicon-tailwindcss-original",
-  "Framer Motion":  "devicon-framermotion-original",
-
-  // Backend
-  "Node.js":        "devicon-nodejs-plain-wordmark",
-  Python:           "devicon-python-plain",
-  MongoDB:          "devicon-mongodb-plain-wordmark",
-  "Express.js":     "devicon-express-original",
-  MySQL:            "devicon-mysql-original",
-
-  // Tools
-  Git:              "devicon-git-plain",
-  GitHub:           "devicon-github-original",
-  Vercel:           "devicon-vercel-original-wordmark",
-  Figma:            "devicon-figma-plain",
-  Canva:            "devicon-canva-original",
-};
-
-// ─── Fallback SVG paths for skills not in devicon ────────────────────────────
-const fallbackPaths: Record<string, string> = {
-  Multer:
-    "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12",
-  FFMPEG:
-    "M15 10l4.553-2.277A1 1 0 0 1 21 8.68v6.64a1 1 0 0 1-1.447.899L15 14M3 8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8Z",
-  Render:
-    "M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6Zm4 1v10M12 7v10M16 7v10",
-};
-
-// ─── Skill Icon ───────────────────────────────────────────────────────────────
-function SkillIcon({ name }: { name: string }) {
-  const cls = deviconClass[name];
-
-  if (cls) {
-    return (
-      <i
-        className={`${cls} text-[15px] opacity-60 shrink-0`}
-        aria-hidden="true"
-      />
-    );
-  }
-
-  const d = fallbackPaths[name];
-  if (!d) return null;
-
-  return (
-    <svg
-      width="15"
-      height="15"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="opacity-50 shrink-0"
-    >
-      <path d={d} />
-    </svg>
-  );
-}
 
 // ─── Badge ───────────────────────────────────────────────────────────────────
 function Badge({
@@ -144,7 +59,7 @@ function Badge({
           boxShadow: hovered ? `0 0 6px ${accent}` : "none",
         }}
       />
-      <SkillIcon name={name} />
+      <TechIcon name={name} className="w-[15px] h-[15px]" />
       {name}
     </motion.span>
   );
@@ -207,8 +122,6 @@ export default function SkillsBadges({
   title,
   categories,
 }: SkillsBadgesProps) {
-  useDevicon(); // inject devicon stylesheet once
-
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 

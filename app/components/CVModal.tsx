@@ -1,30 +1,38 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type Lang = "pt" | "en";
 
 export default function CVModal({ isOpen, onClose, lang }: { isOpen: boolean; onClose: () => void; lang: Lang }) {
+  const [activeLang, setActiveLang] = useState<Lang>(lang);
   
   useEffect(() => {
-    if (isOpen) document.body.style.overflow = "hidden";
+    if (isOpen) {
+      setActiveLang(lang);
+      document.body.style.overflow = "hidden";
+    }
     else document.body.style.overflow = "unset";
     return () => { document.body.style.overflow = "unset"; };
-  }, [isOpen]);
+  }, [isOpen, lang]);
 
-  const content = {
+  const resumes = {
     pt: {
       file: "/EzequielBorges_portugueseCV.pdf",
       preview: "/images/ptpreview.png",
-      download: "Baixar PDF"
+      download: "Baixar currículo em português",
+      previewAlt: "Prévia do currículo ATS em português",
     },
     en: {
       file: "/EzequielBorges_englishCV.pdf",
       preview: "/images/enpreview.png",
-      download: "Download PDF"
+      download: "Download English resume",
+      previewAlt: "English ATS resume preview",
     }
-  }[lang];
+  };
+
+  const content = resumes[activeLang];
 
   return (
     <AnimatePresence>
@@ -61,11 +69,29 @@ export default function CVModal({ isOpen, onClose, lang }: { isOpen: boolean; on
             <div className="absolute top-0 left-0 right-0 h-px z-20" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)" }} />
 
             {/* Header Fixo */}
-            <div className="p-5 border-b border-white/5 flex items-center justify-between relative z-10">
+            <div className="p-5 border-b border-white/5 flex items-center justify-between gap-4 relative z-10">
                 <p className="text-[10px] tracking-[0.25em] uppercase text-white/25 font-light ml-2">
-                    {lang === "pt" ? "Visualização Completa" : "Full Preview"}
+                    {lang === "pt" ? "Currículos ATS" : "ATS resumes"}
                 </p>
-                <button onClick={onClose} className="text-white/40 hover:text-white transition-all p-2">
+                <div className="flex items-center gap-2 ml-auto" role="tablist" aria-label={lang === "pt" ? "Idioma do currículo" : "Resume language"}>
+                  {(["pt", "en"] as Lang[]).map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      role="tab"
+                      aria-selected={activeLang === option}
+                      onClick={() => setActiveLang(option)}
+                      className={`px-4 py-2 rounded text-[10px] tracking-[0.14em] uppercase transition-colors ${
+                        activeLang === option
+                          ? "bg-white text-black"
+                          : "bg-white/5 text-white/55 hover:text-white"
+                      }`}
+                    >
+                      {option === "pt" ? "Português" : "English"}
+                    </button>
+                  ))}
+                </div>
+                <button onClick={onClose} aria-label={lang === "pt" ? "Fechar" : "Close"} className="text-white/40 hover:text-white transition-all p-2">
                     <svg width="18" height="18" viewBox="0 0 14 14" fill="none">
                         <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                     </svg>
@@ -77,7 +103,7 @@ export default function CVModal({ isOpen, onClose, lang }: { isOpen: boolean; on
               <div className="w-full flex justify-center">
                 <img 
                   src={content.preview} 
-                  alt="CV Preview" 
+                  alt={content.previewAlt}
                   className="w-full h-auto max-w-3xl shadow-2xl select-none"
                 />
               </div>

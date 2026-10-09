@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import ProjectModal from "./projectModal";
+import TechIcon from "./techIcon";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 export type ProjectItem = {
@@ -12,8 +13,10 @@ export type ProjectItem = {
   desc: string;
   tags: string[];
   video?: string;
+  live?: string;
   repo?: string;
   year?: string;
+  hasTests?: boolean;
 };
 
 export type ProjectsSectionProps = {
@@ -23,6 +26,59 @@ export type ProjectsSectionProps = {
   projects: ProjectItem[];
   lang: "pt" | "en";
 };
+
+function ProjectMedia({ src, name }: { src: string; name: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const isAnimatedImage = src.toLowerCase().endsWith(".gif");
+
+  useEffect(() => {
+    if (isAnimatedImage) return;
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          void video.play().catch(() => undefined);
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.3, rootMargin: "80px 0px" }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [src, isAnimatedImage]);
+
+  if (isAnimatedImage) {
+    return (
+      <img
+        src={src}
+        alt={`Preview do projeto ${name}`}
+        loading="lazy"
+        decoding="async"
+        className="w-full h-full object-cover"
+      />
+    );
+  }
+
+  return (
+    <video
+      ref={videoRef}
+      muted
+      autoPlay
+      loop
+      playsInline
+      preload="metadata"
+      aria-label={`Preview do projeto ${name}`}
+      className="w-full h-full object-cover"
+    >
+      <source src={src} type="video/mp4" />
+    </video>
+  );
+}
 
 // ─── Arrow Icon ────────────────────────────────────────────────────────────────
 function ArrowRight({ className = "" }: { className?: string }) {
@@ -148,8 +204,7 @@ function ProjectCard({
       transition={{ duration: 0.7, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={() => project.repo && onOpenModal(project)}
-      className="group relative border-b cursor-pointer"
+      className="group relative border-b"
       style={{ borderColor: "rgba(255,255,255,0.07)" }}
     >
       {/* Background Gradient Sutil (mantido para todos) */}
@@ -161,8 +216,7 @@ function ProjectCard({
         }}
       />
 
-      {/* Renderiza as ondas roxas apenas se NÃO for o projeto 04 */}
-      {project.number !== "04" && <WaveEffect visible={hovered} />}
+      <WaveEffect visible={hovered} />
 
       <div className="relative flex flex-col md:flex-row md:items-center gap-4 md:gap-0 px-0 py-8 md:py-10">
 
@@ -179,9 +233,23 @@ function ProjectCard({
           >
             {project.name}
           </h3>
-          <p className="text-[11px] tracking-[0.18em] uppercase text-white/40 font-light mt-1">
-            {project.type}
-          </p>
+          <div className="flex flex-wrap items-center gap-2 mt-2">
+            <p className="text-[11px] tracking-[0.18em] uppercase text-white/40 font-light">
+              {project.type}
+            </p>
+            {project.hasTests && (
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-1 text-[9px] font-medium uppercase tracking-[0.14em] text-emerald-300"
+                title={lang === "pt" ? "Projeto com testes automatizados" : "Project with automated tests"}
+              >
+                <svg aria-hidden="true" width="11" height="11" viewBox="0 0 12 12" fill="none">
+                  <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2" />
+                  <path d="M3.5 6.1 5.2 7.8 8.7 4.3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                {lang === "pt" ? "Testes automatizados" : "Automated tests"}
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Video ou Espaçador Vazio */}
@@ -193,14 +261,7 @@ function ProjectCard({
               aspectRatio: "16/9",
             }}
           >
-            <video
-              src={project.video}
-              muted
-              autoPlay
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-            />
+            <ProjectMedia src={project.video} name={project.name} />
           </div>
         ) : (
           <div 
@@ -223,35 +284,50 @@ function ProjectCard({
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-[10px] tracking-[0.15em] uppercase px-2 py-[3px] font-light transition-all duration-300"
+                className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.15em] uppercase px-2 py-[3px] font-light transition-all duration-300"
                 style={{
                   border: "1px solid rgba(255,255,255,0.12)",
                   color: "rgba(255,255,255,0.70)",
                   opacity: hovered ? 0.9 : 0.72,
                 }}
               >
+                <TechIcon name={tag} />
                 {tag}
               </span>
             ))}
           </div>
         </div>
 
-        {/* Arrow */}
-        <div className="flex items-center gap-4 md:w-24 md:justify-end shrink-0">
+        {/* Project links */}
+        <div className="flex items-center md:flex-col md:items-end gap-3 md:w-24 shrink-0">
           {project.year && (
             <span className="text-[11px] tracking-[0.15em] text-white/35 font-light">
               {project.year}
             </span>
           )}
-          <div
-            className="transition-all duration-200"
-            style={{
-              color: "rgba(255,255,255,0.3)",
-              transform: hovered ? "translate(3px, -3px)" : "translate(0,0)",
-            }}
-          >
-            <ArrowRight />
-          </div>
+          {project.live && (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${lang === "pt" ? "Abrir projeto" : "Visit project"} ${project.name}`}
+              className="flex items-center gap-2 text-[10px] tracking-[0.14em] uppercase text-white/70 hover:text-white transition-colors"
+            >
+              {lang === "pt" ? "Abrir" : "Visit"}
+              <ArrowRight />
+            </a>
+          )}
+          {project.repo && (
+            <button
+              type="button"
+              onClick={() => onOpenModal(project)}
+              aria-label={`${lang === "pt" ? "Abrir repositório de" : "Open repository for"} ${project.name}`}
+              className="flex items-center gap-2 text-[10px] tracking-[0.14em] uppercase text-white/35 hover:text-white/70 transition-colors"
+            >
+              GitHub
+              <ArrowRight />
+            </button>
+          )}
         </div>
       </div>
     </motion.div>
