@@ -15,7 +15,7 @@ const translations = {
   pt: {
     eyebrow: "Desenvolvedor & Criador",
     greeting: "Olá, eu sou",
-    description: "React & TypeScript — de games a dashboards, foco em interfaces que têm alma",
+    description: "Produtos digitais com React e TypeScript — de plataformas de comunidade e dashboards a jogos interativos, unindo arquitetura sólida, performance e experiência de usuário.",
     cta: "Veja meu portfólio",
     ghost: "",
     based: "Baseado em",
@@ -24,7 +24,7 @@ const translations = {
   en: {
     eyebrow: "Developer & Creator",
     greeting: "Hi, I am",
-    description: "React & TypeScript — from games to dashboards, building interfaces with soul",
+    description: "Digital products with React and TypeScript — from community platforms and dashboards to interactive games, combining solid architecture, performance, and user experience.",
     cta: "Take a look at my portfolio",
     ghost: "",
     based: "Based in",
