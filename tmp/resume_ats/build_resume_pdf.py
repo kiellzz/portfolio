@@ -148,17 +148,17 @@ CONTENT = {
         "role": "DESENVOLVEDOR FULL STACK",
         "summary_title": "RESUMO PROFISSIONAL",
         "summary": (
-            "Desenvolvedor Full Stack com atuação em React, TypeScript, Next.js, React Native e Node.js. "
+            "Desenvolvedor Full Stack com atuação em React, TypeScript, Next.js, React Native, Node.js e Python. "
             "Desenvolve aplicações web e mobile de ponta a ponta, com interfaces responsivas, autenticação, "
             "persistência de dados, comunicação em tempo real e deploy. Experiência prática em plataformas "
             "de comunidades, gestão financeira, operações de restaurantes, processamento de áudio e simuladores interativos."
         ),
         "skills_title": "COMPETÊNCIAS TÉCNICAS",
         "skills": [
-            ("Linguagens", "TypeScript, JavaScript, HTML, CSS"),
+            ("Linguagens", "TypeScript, JavaScript, Python, HTML, CSS"),
             ("Frontend e mobile", "React, Next.js, React Native, Vite, Tailwind CSS, Framer Motion"),
-            ("Backend e dados", "Node.js, Express.js, Supabase, PostgreSQL, MongoDB, WebSocket, Multer, FFmpeg"),
-            ("Ferramentas", "Git, GitHub, Vercel, Render, Figma, Prompt Engineering"),
+            ("Backend e dados", "Node.js, Python, FastAPI, pandas, Express.js, Supabase, PostgreSQL, MongoDB, WebSocket, Multer, FFmpeg"),
+            ("Ferramentas", "Docker, Docker Compose, Git, GitHub, Vercel, Render, Figma, Prompt Engineering"),
         ],
         "projects_title": "PROJETOS TÉCNICOS",
         "education_title": "FORMAÇÃO",
@@ -202,13 +202,13 @@ CONTENT = {
             ),
             (
                 "EZSaldo",
-                "Node.js, Express.js, MongoDB, JavaScript",
+                "Node.js, Express.js, MongoDB, Python, FastAPI, pandas, Docker",
                 [
-                    "Criou aplicação financeira Full Stack com persistência de dados, dashboard de evolução financeira e gerenciamento de perfil e avatar.",
-                    "Implementou autenticação JWT com rotas protegidas, isolando os dados financeiros de cada usuário, e testes automatizados de autenticação e transações.",
+                    "Desenvolveu aplicação financeira Full Stack com autenticação JWT, filtros, dashboards e relatórios mensais em PDF, com os serviços orquestrados via Docker Compose.",
+                    "Criou serviço Python com FastAPI e pandas para análise de dados, detecção de gastos atípicos por IQR e projeções de saldo por média móvel.",
                 ],
                 "https://github.com/kiellzz/financial-tracker",
-                "https://financial-tracker-1ky7.vercel.app/login.html",
+                "https://ezsaldo.vercel.app/",
                 None,
             ),
             (
@@ -243,17 +243,17 @@ CONTENT = {
         "role": "FULL STACK DEVELOPER",
         "summary_title": "PROFESSIONAL SUMMARY",
         "summary": (
-            "Full Stack Developer working with React, TypeScript, Next.js, React Native, and Node.js. "
+            "Full Stack Developer working with React, TypeScript, Next.js, React Native, Node.js, and Python. "
             "Builds end-to-end web and mobile applications with responsive interfaces, authentication, "
             "data persistence, real-time communication, and deployment. Hands-on experience with community "
             "platforms, financial management, restaurant operations, audio processing, and interactive simulators."
         ),
         "skills_title": "TECHNICAL SKILLS",
         "skills": [
-            ("Languages", "TypeScript, JavaScript, HTML, CSS"),
+            ("Languages", "TypeScript, JavaScript, Python, HTML, CSS"),
             ("Frontend and mobile", "React, Next.js, React Native, Vite, Tailwind CSS, Framer Motion"),
-            ("Backend and data", "Node.js, Express.js, Supabase, PostgreSQL, MongoDB, WebSocket, Multer, FFmpeg"),
-            ("Tools", "Git, GitHub, Vercel, Render, Figma, Prompt Engineering"),
+            ("Backend and data", "Node.js, Python, FastAPI, pandas, Express.js, Supabase, PostgreSQL, MongoDB, WebSocket, Multer, FFmpeg"),
+            ("Tools", "Docker, Docker Compose, Git, GitHub, Vercel, Render, Figma, Prompt Engineering"),
         ],
         "projects_title": "TECHNICAL PROJECTS",
         "education_title": "EDUCATION",
@@ -297,13 +297,13 @@ CONTENT = {
             ),
             (
                 "EZSaldo",
-                "Node.js, Express.js, MongoDB, JavaScript",
+                "Node.js, Express.js, MongoDB, Python, FastAPI, pandas, Docker",
                 [
-                    "Created a Full Stack financial application with persistent data, a financial progress dashboard, and profile and avatar management.",
-                    "Implemented JWT authentication with protected routes, isolating each user's financial data, and automated authentication and transaction tests.",
+                    "Developed a Full Stack financial application with JWT authentication, filters, dashboards, and monthly PDF reports, with services orchestrated through Docker Compose.",
+                    "Built a Python service with FastAPI and pandas for data analysis, IQR-based unusual expense detection, and moving-average balance projections.",
                 ],
                 "https://github.com/kiellzz/financial-tracker",
-                "https://financial-tracker-1ky7.vercel.app/login.html",
+                "https://ezsaldo.vercel.app/",
                 None,
             ),
             (
@@ -349,7 +349,7 @@ def build_resume(language):
         title=content["title"],
         author="Ezequiel David Borges",
         subject=content["subject"],
-        keywords="Full Stack Developer, React, TypeScript, Next.js, React Native, Node.js, Supabase, PostgreSQL, MongoDB",
+        keywords="Full Stack Developer, React, TypeScript, Next.js, React Native, Node.js, Python, FastAPI, pandas, Docker, Docker Compose, Supabase, PostgreSQL, MongoDB",
     )
 
     story = [
