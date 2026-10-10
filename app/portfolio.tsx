@@ -333,6 +333,8 @@ function Header({
             key={l}
             onClick={() => onLangChange(l)}
             title={l === "pt" ? "Português" : "English"}
+            aria-label={l === "pt" ? "Mudar idioma para português" : "Switch language to English"}
+            aria-pressed={lang === l}
             className="relative overflow-hidden transition-all duration-200 hover:-translate-y-[1px]"
             style={{
               width: 28,
@@ -358,20 +360,48 @@ function Header({
         ))}
       </div>
 
-      {/* ── Mobile hamburger ── */}
-      <button
-        className="md:hidden text-white/60 hover:text-white/80 transition-colors"
-        onClick={() => setMenuOpen(!menuOpen)}
-      >
-        <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
-          <path
-            d={menuOpen ? "M1 1l16 10M1 11L17 1" : "M0 1h18M0 6h18M0 11h18"}
-            stroke="currentColor"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-          />
-        </svg>
-      </button>
+      {/* ── Mobile language switcher and menu ── */}
+      <div className="flex items-center gap-5 md:hidden">
+        <div className="flex items-center gap-2">
+          {(["pt", "en"] as Lang[]).map((l) => (
+            <button
+              key={l}
+              onClick={() => onLangChange(l)}
+              title={l === "pt" ? "Português" : "English"}
+              aria-label={l === "pt" ? "Mudar idioma para português" : "Switch language to English"}
+              aria-pressed={lang === l}
+              className="relative h-5 w-7 overflow-hidden rounded-[2px] transition-all duration-200"
+              style={{
+                outline: lang === l ? "1.5px solid rgba(255,255,255,0.55)" : "1.5px solid rgba(255,255,255,0.12)",
+                filter: lang === l ? "none" : "grayscale(1) brightness(0.6)",
+              }}
+            >
+              <img
+                src={l === "pt"
+                  ? "https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.11.1/flags/4x3/br.svg"
+                  : "https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.11.1/flags/4x3/us.svg"}
+                alt=""
+                className="block h-full w-full object-cover"
+              />
+            </button>
+          ))}
+        </div>
+        <button
+          className="text-white/60 transition-colors hover:text-white/80"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={menuOpen}
+        >
+          <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
+            <path
+              d={menuOpen ? "M1 1l16 10M1 11L17 1" : "M0 1h18M0 6h18M0 11h18"}
+              stroke="currentColor"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
+      </div>
 
       <AnimatePresence>
         {menuOpen && (
@@ -394,36 +424,6 @@ function Header({
               </button>
             ))}
 
-            {/* ── Language switcher (mobile) ── */}
-            <div className="flex items-center gap-3 px-8 pt-4 pb-1">
-              {(["pt", "en"] as Lang[]).map((l) => (
-                <button
-                  key={l}
-                  onClick={() => { onLangChange(l); setMenuOpen(false); }}
-                  title={l === "pt" ? "Português" : "English"}
-                  className="relative overflow-hidden transition-all duration-200"
-                  style={{
-                    width: 28,
-                    height: 20,
-                    borderRadius: 2,
-                    outline: lang === l
-                      ? "1.5px solid rgba(255,255,255,0.55)"
-                      : "1.5px solid rgba(255,255,255,0.12)",
-                    filter: lang === l ? "none" : "grayscale(1) brightness(0.6)",
-                  }}
-                >
-                  <img
-                    src={
-                      l === "pt"
-                        ? "https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.11.1/flags/4x3/br.svg"
-                        : "https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.11.1/flags/4x3/us.svg"
-                    }
-                    alt={l === "pt" ? "PT" : "EN"}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                  />
-                </button>
-              ))}
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -581,13 +581,14 @@ function ContactSection({
 
 // ─── Portfolio Page ────────────────────────────────────────────────────────────
 export default function Portfolio({
-  lang: initialLang = "en",
+  lang,
+  onLangChange,
   onBack,
 }: {
-  lang?: Lang;
+  lang: Lang;
+  onLangChange: (lang: Lang) => void;
   onBack?: () => void;
 }) {
-  const [lang, setLang] = useState<Lang>(initialLang);
   const [activeSection, setActiveSection] = useState<Section>("projects");
   
   // Estados dos Modais
@@ -664,7 +665,7 @@ export default function Portfolio({
         onNav={scrollToSection}
         onBack={onBack ?? (() => {})}
         lang={lang}
-        onLangChange={setLang}
+        onLangChange={onLangChange}
         t={t}
       />
 
